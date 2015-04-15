@@ -1,6 +1,10 @@
 #include "grid.h"
 #define MAX_LINE 512
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <curses.h>
+
 grid init_grid(int lines, int columns)
 {
 	grid g;
@@ -89,11 +93,11 @@ grid load_grid(char *file_name)
 
 	int line = 0;
 
-	char input[MAX_LINE];
+	//char input[MAX_LINE];
 
 	int r, nb_lines, nb_columns, i, j, position_x, position_y;
 	fscanf(pToFile, "%d %d", &nb_lines, &nb_columns);
-	
+
 	fscanf(pToFile, "%d %d", &position_x, &position_y);
 	point p = { position_x, position_y };
 	grid g = init_grid(nb_lines, nb_columns);
@@ -105,7 +109,7 @@ grid load_grid(char *file_name)
 			fscanf(pToFile, "%d ", &r);
 			g.plan[i][j] = r;
 		}
-		
+
 	}
 	print_grid(g);
 
@@ -119,14 +123,14 @@ point load_point(char *file_name)
 
 	int line = 0;
 
-	char input[MAX_LINE];
+	//char input[MAX_LINE];
 
-	int r, nb_lines, nb_columns, i, j, position_x, position_y;
+	int  nb_lines, nb_columns, position_x, position_y;
 	fscanf(pToFile, "%d %d", &nb_lines, &nb_columns);
 
 	fscanf(pToFile, "%d %d", &position_x, &position_y);
 	point p = { position_x, position_y };
-	
+
 	fclose(pToFile);
 	return p;
 }

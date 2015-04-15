@@ -1,8 +1,7 @@
 #ifndef _GRID_H_
 #define _GRID_H_
 
-#include <stdlib.h>
-#include <stdio.h>
+
 
 #include "point.h"
 
