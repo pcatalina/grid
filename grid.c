@@ -93,7 +93,7 @@ grid load_grid(char *file_name)
 
 	int line = 0;
 
-	//char input[MAX_LINE];
+	
 
 	int r, nb_lines, nb_columns, i, j, position_x, position_y;
 	fscanf(pToFile, "%d %d", &nb_lines, &nb_columns);
@@ -122,8 +122,6 @@ point load_point(char *file_name)
 	FILE *pToFile = fopen(file_name, "r");
 
 	int line = 0;
-
-	//char input[MAX_LINE];
 
 	int  nb_lines, nb_columns, position_x, position_y;
 	fscanf(pToFile, "%d %d", &nb_lines, &nb_columns);
