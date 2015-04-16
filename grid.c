@@ -33,42 +33,42 @@ void print_grid(grid g)
 		{
 			for (k = 0; k <= (g.columns + 1); k++)
 			{
-				printf("_");
+				printw("_");
 			}
-			printf("\n");
+			printw("\n");
 		}
 		for (j = 0; j < g.columns; j++)
 		{
 			if (j == 0)
 			{
-				printf("|");
+				printw("|");
 			}
 			if (g.plan[i][j] == 0)
 			{
-				printf(" ");      //replace 0 with space
+				printw(" ");      //replace 0 with space
 			}
 			else if (g.plan[i][j] == 1)
 			{
-				printf("#");
+				printw("#");
 			}
 			else if (g.plan[i][j] == 2)
 			{
-				printf("G");
+				printw("G");
 			}
 			if (j == (g.columns - 1))
 			{
-				printf("|");
+				printw("|");
 			}
 		}
-		printf("\n");
+		printw("\n");
 
 		if (i == (g.lines - 1))
 		{
 			for (k = 0; k <= (g.columns + 1); k++)
 			{
-				printf("_");
+				printw("_");
 			}
-			printf("\n");
+			printw("\n");
 		}
 	}
 }
@@ -111,7 +111,6 @@ grid load_grid(char *file_name)
 		}
 
 	}
-	print_grid(g);
 
 	fclose(pToFile);
 	return g;
