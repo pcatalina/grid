@@ -11,11 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="play.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="grid.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="point.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="play.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="grid.h" />
     <ClInclude Include="point.h" />

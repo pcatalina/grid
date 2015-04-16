@@ -1,14 +1,8 @@
-#ifndef _GAMER_H_
-#define _GAMER_H_
-
-#include <stdlib.h>
-#include <stdio.h>
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
 
 #include "point.h"
-#include "grid.h"
 
-#define MAX_LIVES 10
-#define MAX_MOVES 100
 
 typedef struct
 {
@@ -19,6 +13,8 @@ typedef struct
 	//char** inventory;
 }player;
 
+point get_position(player* p);
 
-void move_player(char* file_name);
-#endif // !_GAMER_H_
+void set_position(player* p, point pt);
+
+#endif // !_PLAYER_H_

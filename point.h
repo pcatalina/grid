@@ -8,4 +8,5 @@ typedef struct
 }point;
 
 point sum_points(point p, point q);
+
 #endif _POINT_H_

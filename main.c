@@ -5,7 +5,7 @@
 
 int main()
 {
-	move_player("grid.txt");
+	play("grid.txt");
 
 	getchar();
 	return 0;
