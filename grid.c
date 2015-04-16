@@ -132,3 +132,13 @@ point load_point(char *file_name)
 	fclose(pToFile);
 	return p;
 }
+
+int get_cell(grid* g, point pt)
+{
+	return g->plan[pt.x][pt.y];
+}
+
+void set_cell(grid* g, point pt, int value)
+{
+	g->plan[pt.x][pt.y] = value;
+}
