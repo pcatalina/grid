@@ -1,6 +1,5 @@
-#include "grid.h"
-#include "player.h"
-#define MAX_LINE 512
+#include "play.h"
+
 
 
 int main()
