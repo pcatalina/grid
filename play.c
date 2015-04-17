@@ -1,16 +1,32 @@
 #include <curses.h>
-#include "player.h"
-#include "grid.h"
+
+#include "play.h"
+
+int bounds_checking(point future_player_pos, grid* g)
+{
+	if (get_cell(g, future_player_pos) == 1)
+		return 1;
+	else
+		return 0;
+}
 
 void go(player* p, grid* g, point direction)
 {
 	point old_position = get_position(p);
-	int previous = get_cell(g, old_position);
 	point new_position = sum_points(old_position, direction);
-	set_cell(g, new_position, 2);
-	set_cell(g, old_position, 0);
-	set_position(p, new_position);
-	print_grid(*g);
+	if (bounds_checking(new_position, g) == 0)
+	{
+		set_cell(g, new_position, 2);
+		set_cell(g, old_position, 0);
+		set_position(p, new_position);
+		print_grid(*g);
+	}
+	else
+	{
+		set_position(p, old_position);
+		print_grid(*g);
+	}
+
 }
 void go_up(player* p, grid* g)
 {
@@ -40,7 +56,7 @@ void go_left(player* p, grid* g)
 
 void play(char* file_name)
 {
-	WINDOW * mainwin=initscr();
+	WINDOW * mainwin = initscr();
 
 	noecho();
 
