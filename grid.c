@@ -53,7 +53,7 @@ void print_grid(grid g)
 			}
 			else if (g.plan[i][j] == 2)
 			{
-				printw("G");
+				printw("%c",234);
 			}
 			if (j == (g.columns - 1))
 			{
@@ -66,7 +66,7 @@ void print_grid(grid g)
 		{
 			for (k = 0; k <= (g.columns + 1); k++)
 			{
-				printw("_");
+				printw("^");
 			}
 			printw("\n");
 		}
