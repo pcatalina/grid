@@ -1,7 +1,17 @@
+/**
+* @file		play.c
+* @bref		Move player functions	
+*/
 #include <curses.h>
 
 #include "play.h"
 
+/**
+* @bref		Checks if player is moving into a wall or out of the grid
+* @param	future_player_pos point
+* @param	g grid*
+* @return	True if playes goes out of borders False if not
+*/
 int bounds_checking(point future_player_pos, grid* g)
 {
 	if ((get_cell(g, future_player_pos) == 1)||
@@ -14,6 +24,13 @@ int bounds_checking(point future_player_pos, grid* g)
 		return 0;
 }
 
+/**
+* @bref		Moves player
+* @param	p player*
+* @param	g grid*
+* @param	direction point
+* @return	
+*/
 void go(player* p, grid* g, point direction)
 {
 	point old_position = get_position(p);
@@ -32,6 +49,13 @@ void go(player* p, grid* g, point direction)
 	}
 
 }
+
+/**
+* @bref		Directs player up
+* @param	p player*
+* @param	g grid*
+* @return	
+*/
 void go_up(player* p, grid* g)
 {
 	point position = { -1, 0 };
@@ -39,25 +63,47 @@ void go_up(player* p, grid* g)
 
 }
 
+/**
+* @bref		Directs player to the right
+* @param	p player*
+* @param	g grid*
+* @return
+*/
 void go_right(player* p, grid* g)
 {
 	point position = { 0, 1 };
 	go(p, g, position);
 }
 
-
+/**
+* @bref		Directs player down
+* @param	p player*
+* @param	g grid*
+* @return
+*/
 void go_down(player* p, grid* g)
 {
 	point position = { 1, 0 };
 	go(p, g, position);
 }
 
+/**
+* @bref		Directs player to the left
+* @param	p player*
+* @param	g grid*
+* @return
+*/
 void go_left(player* p, grid* g)
 {
 	point position = { 0, -1 };
 	go(p, g, position);
 }
 
+/**
+* @bref		Opens window to play in the game
+* @param	file_name char*
+* @return	
+*/
 void play(char* file_name)
 {
 	WINDOW * mainwin = initscr();

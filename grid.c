@@ -1,3 +1,7 @@
+/**
+* @file		grid.c
+* @bref		charge and change the grid
+*/
 #include "grid.h"
 #define MAX_LINE 512
 
@@ -5,6 +9,12 @@
 #include <stdio.h>
 #include <curses.h>
 
+/**
+* @bref		Initializes a grid
+* @param	lines int
+* @param	columns int
+* @return	Empty grid
+*/
 grid init_grid(int lines, int columns)
 {
 	grid g;
@@ -24,6 +34,11 @@ grid init_grid(int lines, int columns)
 	return g;
 }
 
+/**
+* @bref		Prints a grid
+* @param	g grid
+* @return	
+*/
 void print_grid(grid g)
 {
 	int i, j, k;
@@ -72,7 +87,11 @@ void print_grid(grid g)
 		}
 	}
 }
-
+/**
+* @bref		Counts not empty cells in a grid
+* @param	g grid
+* @return	number of not empty cases
+*/
 int countNotEmptyCases(grid g)
 {
 	int i, j, counter = 0;
@@ -87,6 +106,11 @@ int countNotEmptyCases(grid g)
 	return counter;
 }
 
+/**
+* @bref		Loads a grid from a file
+* @param	file_name char*
+* @return	Grid from the file
+*/
 grid load_grid(char *file_name)
 {
 	FILE *pToFile = fopen(file_name, "r");
@@ -116,6 +140,12 @@ grid load_grid(char *file_name)
 	return g;
 }
 
+
+/**
+* @bref		Loads initial position of the player
+* @param	file_name char*
+* @return	initial position of the player
+*/
 point load_point(char *file_name)
 {
 	FILE *pToFile = fopen(file_name, "r");
@@ -132,11 +162,24 @@ point load_point(char *file_name)
 	return p;
 }
 
+/**
+* @bref		Gets the value of a cell from the grid
+* @param	g grid*
+* @param	pt point
+* @return	Value of the chosen cell
+*/
 int get_cell(grid* g, point pt)
 {
-	return g->plan[pt.x][pt.y];
+ 	return g->plan[pt.x][pt.y];
 }
 
+/**
+* @bref		Changes the value of a specific cell
+* @param	g grid*
+* @param	pt point
+* @param	value int
+* @return	
+*/
 void set_cell(grid* g, point pt, int value)
 {
 	g->plan[pt.x][pt.y] = value;
