@@ -4,7 +4,11 @@
 
 int bounds_checking(point future_player_pos, grid* g)
 {
-	if (get_cell(g, future_player_pos) == 1)
+	if ((get_cell(g, future_player_pos) == 1)||
+		(future_player_pos.x==0)||
+		(future_player_pos.y<0)||
+		(future_player_pos.x>=g->lines-1)||
+		(future_player_pos.y==g->columns))
 		return 1;
 	else
 		return 0;
