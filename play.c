@@ -12,16 +12,17 @@
 * @param	g grid*
 * @return	True if playes goes out of borders False if not
 */
-int bounds_checking(point future_player_pos, grid* g)
+int is_in_bounds(point future_player_pos, grid* g)
 {
-	if ((get_cell(g, future_player_pos) == 1)||
-		(future_player_pos.x==0)||
+	return ((future_player_pos.x<0)||
 		(future_player_pos.y<0)||
-		(future_player_pos.x>=g->lines-1)||
-		(future_player_pos.y==g->columns))
-		return 1;
-	else
-		return 0;
+		(future_player_pos.x==g->lines-1)||
+		(future_player_pos.y == g->columns));
+}
+
+int is_not_a_wall(point pos, grid* g)
+{
+	return (get_cell(g, pos) != 1);
 }
 
 /**
@@ -35,7 +36,7 @@ void go(player* p, grid* g, point direction)
 {
 	point old_position = get_position(p);
 	point new_position = sum_points(old_position, direction);
-	if (bounds_checking(new_position, g) == 0)
+	if (is_in_bounds(new_position, g) && is_not_a_wall(new_position, g))
 	{
 		set_cell(g, new_position, 2);
 		set_cell(g, old_position, 0);

@@ -170,6 +170,7 @@ point load_point(char *file_name)
 */
 int get_cell(grid* g, point pt)
 {
+	assert(is_in_bounds(pt, g));
  	return g->plan[pt.x][pt.y];
 }
 
