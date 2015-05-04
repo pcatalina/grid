@@ -4,8 +4,6 @@
 #include "player.h"
 #include "grid.h"
 
-int is_in_bounds(point future_player_pos, grid* g);
-
 void go(player* p, grid* g, point direction);
 
 void go_up(player* p, grid* g);

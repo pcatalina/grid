@@ -22,6 +22,10 @@ grid load_grid(char* file_name);
 
 point load_point(char *file_name);
 
+int is_in_bounds(point future_player_pos, grid* g);
+
+int is_not_a_wall(point pos, grid* g);
+
 int get_cell(grid* g, point pt);
 
 void set_cell(grid* g, point pt, int value);

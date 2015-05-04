@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <curses.h>
+#include <assert.h>
 
 /**
 * @bref		Initializes a grid
@@ -160,6 +161,30 @@ point load_point(char *file_name)
 
 	fclose(pToFile);
 	return p;
+}
+/**
+* @bref		Checks if player is moving into a wall or out of the grid
+* @param	future_player_pos point
+* @param	g grid*
+* @return	True if playes goes out of borders False if not
+*/
+int is_in_bounds(point future_player_pos, grid* g)
+{
+	return ((future_player_pos.x > (-1)) &&
+		(future_player_pos.y > (-1)) &&
+		(future_player_pos.x < g->lines) &&
+		(future_player_pos.y < g->columns));
+}
+
+/**
+* @bref		Checks if the position is not a wall
+* @param	pos point 
+* @param	g grid*
+* @return	True or False 
+*/
+int is_not_a_wall(point pos, grid* g)
+{
+	return (get_cell(g, pos) != 1);
 }
 
 /**
