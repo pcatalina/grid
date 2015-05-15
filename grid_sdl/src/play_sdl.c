@@ -1,3 +1,8 @@
+/**
+* @file		play.c
+* @bref		Game functions
+*/
+
 #include <cairo.h>
 #include "SDL_image.h"
 #include "grid.h"
@@ -8,7 +13,10 @@
 #define STEP_SIZE	  50
 #define SCREEN_WIDTH  SCREEN_SIZE.x*STEP_SIZE
 #define SCREEN_HEIGHT SCREEN_SIZE.y*STEP_SIZE
-
+/**
+* @bref		Drow a rectangle on a SDL surface with help of CAIRO
+* @param	SDL surface	on with the picture will apear
+*/
 void drawRectCairo(SDL_Surface *screen) {
 
 	cairo_surface_t *cairosurf = cairo_image_surface_create_for_data(screen->pixels, CAIRO_FORMAT_RGB24,
@@ -24,13 +32,18 @@ void drawRectCairo(SDL_Surface *screen) {
 
 	cairo_stroke(cr);
 }
-
+/**
+* @bref		Print a grid replacing numbers with specific pictures
+* @param	grid g
+*/
 void print_grid(grid g)
 {
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 
-	SDL_Surface *screen, *sprite, *backbg, *wall, *health, *poison, *life, *heart, *noheart;
-	SDL_Rect rcSprite, rcGrass, rcWater, rcHealth, rcPoison, rcLife, rcHeart, rcNoHeart;
+	SDL_Surface *screen, *sprite, *backbg, *wall, *health, *poison, *life,
+		*heart, *noHeart, *tool, *hunter, *noTool, *mask;
+	SDL_Rect rcSprite, rcGrass, rcWater, rcHealth, rcPoison, rcLife, rcHeart,
+		rcNoHeart, rcTool, rcHunter, rcNoTool, rcMask;
 	int colorkey;
 
 	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
@@ -49,13 +62,20 @@ void print_grid(grid g)
 	poison = IMG_Load("../../data/bomb.png");
 
 	life = IMG_Load("../../data/life.png");
+	if (life == NULL)
+		printf("IMG_Load: %s\n", SDL_GetError());
 
 	heart = IMG_Load("../../data/heart.png");
 
-	noheart = IMG_Load("../../data/noheart.png");
+	noHeart = IMG_Load("../../data/noheart.png");
 
-	if (life == NULL)
-		printf("IMG_Load: %s\n", SDL_GetError());
+	tool = IMG_Load("../../data/glasses.png");
+
+	hunter = IMG_Load("../../data/hunter.png");
+
+	noTool = IMG_Load("../../data/snow.png");
+
+	mask = IMG_Load("../../data/glasses.png");
 
 	int i, j;
 
@@ -63,53 +83,77 @@ void print_grid(grid g)
 	{
 		for (j = 0; j < g.columns; j++)
 		{
-			if (g.plan[i][j] == 0)
+			if (g.plan[i][j] == 0) //background
 			{
 				rcGrass.x = j * SPRITE_SIZE;
 				rcGrass.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(backbg, NULL, screen, &rcGrass);
 			}
-			else if (g.plan[i][j] == 1)
+			else if (g.plan[i][j] == 1) //wall
 			{
 				rcWater.x = j * SPRITE_SIZE;
 				rcWater.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(wall, NULL, screen, &rcWater);
 			}
-			else if (g.plan[i][j] == 2)
+			else if (g.plan[i][j] == 2) //player
 			{
 				rcSprite.x = j * SPRITE_SIZE;
 				rcSprite.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(sprite, NULL, screen, &rcSprite);
 			}
-			else if (g.plan[i][j] == 3)
+			else if (g.plan[i][j] == 3) //health
 			{
 				rcHealth.x = j * SPRITE_SIZE;
 				rcHealth.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(health, NULL, screen, &rcHealth);
 			}
-			else if (g.plan[i][j] == 4)
+			else if (g.plan[i][j] == 4) //poison
 			{
 				rcPoison.x = j * SPRITE_SIZE;
 				rcPoison.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(poison, NULL, screen, &rcPoison);
 			}
-			else if (g.plan[i][j] == 5)
+			else if (g.plan[i][j] == 5) //full life
 			{
 				rcLife.x = j * SPRITE_SIZE;
 				rcLife.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(life, NULL, screen, &rcLife);
 			}
-			else if (g.plan[i][j] == 6)
+			else if (g.plan[i][j] == 6) //shown nb lives
 			{
 				rcHeart.x = j * SPRITE_SIZE;
 				rcHeart.y = i * SPRITE_SIZE;
 				SDL_BlitSurface(heart, NULL, screen, &rcHeart);
 			}
-			else if (g.plan[i][j] == 7)
+			else if (g.plan[i][j] == 7) //shown nb no lives
 			{
 				rcNoHeart.x = j * SPRITE_SIZE;
 				rcNoHeart.y = i * SPRITE_SIZE;
-				SDL_BlitSurface(noheart, NULL, screen, &rcNoHeart);
+				SDL_BlitSurface(noHeart, NULL, screen, &rcNoHeart);
+			}
+			else if (g.plan[i][j] == 8) //have tool
+			{
+				rcTool.x = j * SPRITE_SIZE;
+				rcTool.y = i * SPRITE_SIZE;
+				SDL_BlitSurface(tool, NULL, screen, &rcTool);
+			}
+			else if (g.plan[i][j] == 9) //hunter (monster)
+			{
+				rcHunter.x = j * SPRITE_SIZE;
+				rcHunter.y = i * SPRITE_SIZE;
+				SDL_BlitSurface(hunter, NULL, screen, &rcHunter);
+			}
+			else if (g.plan[i][j] == 10) //don't have tool(absence of tools)
+			{
+				rcNoTool.x = j * SPRITE_SIZE;
+				rcNoTool.y = i * SPRITE_SIZE;
+				SDL_BlitSurface(noTool, NULL, screen, &rcNoTool);
+			}
+			else if (g.plan[i][j] == 11) //mask
+			{
+				rcMask.x = j * SPRITE_SIZE;
+				rcMask.y = i * SPRITE_SIZE;
+				SDL_BlitSurface(mask, NULL, screen, &rcMask);
 			}
 		}
 	}
@@ -122,19 +166,23 @@ void print_grid(grid g)
 	SDL_FreeSurface(wall);
 }
 
+/**
+* @bref		Opens window to play in the game
+* @param	file_name char*
+*/
 void play(char* file_name)
 {
 	SDL_Event event;
 	Uint8 *keystate;
 
-	player p; 
+	player p;
 	p.position = load_point(file_name);
 	grid g = load_grid(file_name);
 
 	int gameover;
 
 	SDL_Init(SDL_INIT_VIDEO);
-	
+
 
 	SDL_WM_SetCaption("Penguin", "Penguin");
 
@@ -161,12 +209,15 @@ void play(char* file_name)
 				case SDLK_q:
 					gameover = 1;
 					break;
+				case SDLK_p:
+					break;
 				default:
 					break;
 				}
 				break;
-
 			}
+
+
 
 			keystate = SDL_GetKeyState(NULL);
 			if (keystate[SDLK_UP])

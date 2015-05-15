@@ -36,18 +36,18 @@ grid init_grid(int lines, int columns)
 }
 
 /**
-* @bref		Counts not empty cells in a grid
+* @bref		Counts the number of specific cases 
 * @param	g grid
-* @return	number of not empty cases
+* @return	number of specific cases
 */
-int countNotEmptyCases(grid g)
+int countCases(grid g, int cell)
 {
 	int i, j, counter = 0;
 	for (i = 0; i < g.lines; i++)
 	{
 		for (j = 0; j < g.columns; j++)
 		{
-			if (g.plan[i][j] == 6)
+			if (g.plan[i][j] == cell)
 				counter++;
 		}
 	}
@@ -86,6 +86,11 @@ grid load_grid(char *file_name)
 	return g;
 }
 
+/**
+* @bref		Loads a grid size from a file
+* @param	file_name char*
+* @return	The size of a grid in a form of point 
+*/
 point load_size(char *file_name)
 {
 	FILE *pToFile = fopen(file_name, "r");
@@ -99,7 +104,6 @@ point load_size(char *file_name)
 	fclose(pToFile);
 	return size;
 }
-
 
 /**
 * @bref		Loads initial position of the player
@@ -122,6 +126,7 @@ point load_point(char *file_name)
 	fclose(pToFile);
 	return p;
 }
+
 /**
 * @bref		Checks if player is moving into a wall or out of the grid
 * @param	future_player_pos point
@@ -155,7 +160,7 @@ int is_not_a_wall(point pos, grid* g)
 */
 int get_cell(grid* g, point pt)
 {
-	assert(is_in_bounds(pt, g));
+	//assert(is_in_bounds(pt, g));
 	return g->plan[pt.x][pt.y];
 }
 

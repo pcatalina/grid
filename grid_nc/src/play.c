@@ -5,7 +5,10 @@
 #include <curses.h>
 
 #include "play.h"
-
+/**
+* @bref		Print a grid replacing numbers with specific signs
+* @param	grid g
+*/
 void print_grid(grid g)
 {
 	int i, j, k;
@@ -56,6 +59,22 @@ void print_grid(grid g)
 			else if (g.plan[i][j] == 7)
 			{
 				printw("%c", 239);
+			}
+			else if (g.plan[i][j] == 8)
+			{
+				printw("o");
+			}
+			else if (g.plan[i][j] == 9)
+			{
+				printw("!");
+			}
+			else if (g.plan[i][j] == 10)
+			{
+				printw(" ");
+			}
+			else if (g.plan[i][j] == 11)
+			{
+				printw("<");
 			}
 			if (j == (g.columns - 1))
 			{
