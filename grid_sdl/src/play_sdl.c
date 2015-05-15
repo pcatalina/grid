@@ -179,14 +179,14 @@ void play(char* file_name)
 	p.position = load_point(file_name);
 	grid g = load_grid(file_name);
 
-	int gameover;
 
 	SDL_Init(SDL_INIT_VIDEO);
 
 
 	SDL_WM_SetCaption("Penguin", "Penguin");
 
-	gameover = 0;
+	int gameover = 0;
+	int pause = 0;
 
 
 	while (!gameover)
@@ -194,7 +194,6 @@ void play(char* file_name)
 
 		if (SDL_PollEvent(&event))
 		{
-
 			switch (event.type)
 			{
 
@@ -209,7 +208,9 @@ void play(char* file_name)
 				case SDLK_q:
 					gameover = 1;
 					break;
-				case SDLK_p:
+				case SDLK_p: pause = 1;
+					break;
+				case SDLK_r: pause = 0;
 					break;
 				default:
 					break;
@@ -218,23 +219,26 @@ void play(char* file_name)
 			}
 
 
+			if (!pause)
+			{
+				keystate = SDL_GetKeyState(NULL);
+				if (keystate[SDLK_UP])
+				{
+					go_up(&p, &g);
+				}
+				else if (keystate[SDLK_DOWN])
+				{
+					go_down(&p, &g);
+				}
+				else if (keystate[SDLK_RIGHT])
+				{
+					go_right(&p, &g);
+				}
+				else if (keystate[SDLK_LEFT])
+				{
+					go_left(&p, &g);
+				}
 
-			keystate = SDL_GetKeyState(NULL);
-			if (keystate[SDLK_UP])
-			{
-				go_up(&p, &g);
-			}
-			else if (keystate[SDLK_DOWN])
-			{
-				go_down(&p, &g);
-			}
-			else if (keystate[SDLK_RIGHT])
-			{
-				go_right(&p, &g);
-			}
-			else if (keystate[SDLK_LEFT])
-			{
-				go_left(&p, &g);
 			}
 
 			print_grid(g);
