@@ -89,7 +89,7 @@ void go(player* p, grid* g, point direction)
 					set_cell(g, tool_position, 10);
 
 				}
-				else
+				if (tool == 0)
 				{
 					p->lives = 0;
 					int j;
