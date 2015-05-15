@@ -14,7 +14,7 @@ typedef struct
 
 grid init_grid(int lines, int columns);
 
-int countNotEmptyCases(grid g);
+int countCases(grid g, int cell);
 
 grid load_grid(char* file_name);
 
