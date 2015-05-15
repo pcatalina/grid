@@ -1,19 +1,27 @@
-all: main
+SHELL=/bin/bash 
 
-main: point.o grid.o player.o play.o main.o
-	gcc main.o play.o player.o grid.o point.o -o Game -lncurses
+FOLDERS=libgrid grid_sdl grid_nc
+FOLDERS_TESTS=libgrid grid_sdl grid_nc
+FOLDERS_ALL=${FOLDERS} ${FOLDERS_TESTS}
 
-point.o: point.c point.h
-	gcc -c point.c
+# call make <target> for each folder (non recursive)
+define make_folders
+	@for a in $1; do    \
+		if [ -d $$a ]; then     \
+			$(MAKE) $2 -C $$a;  \
+		fi;                     \
+	done;
+endef
 
-grid.o: grid.c grid.h point.h 
-	gcc -c grid.c 
 
-player.o: player.c player.h point.h
-	gcc -c player.c
+all:
+	$(call make_folders, ${FOLDERS}, all)
 
-play.o: play.c play.h player.h grid.h 
-	gcc -c play.c
+clean:
+	$(call make_folders, ${FOLDERS_ALL}, clean)
 
-main.o: main.c play.h
-	gcc -c main.c
+docs:
+	$(call make_folders, ${FOLDERS}, docs)
+
+tests:
+	$(call make_folders, ${FOLDERS_TESTS}, all)

@@ -1,0 +1,44 @@
+LIB_PATH=lib/libgrid.a
+CFLAGS+= -Wall -g -std=c99
+
+all: mkbin mklib mkobj $(LIB_PATH) 
+	gcc -o bin/grid \
+-lgrid -Llib -Iinclude $(CFLAGS)
+
+mkbin: 
+	-@mkdir bin
+
+mklib:
+	-@mkdir lib
+
+mkobj:
+	-@mkdir obj
+
+$(LIB_PATH): grid.o move.o player.o point.o
+	ar -crv $(LIB_PATH) obj/grid.o obj/move.o obj/player.o obj/point.o 
+	ranlib $(LIB_PATH)
+
+grid.o: src/grid.c include/grid.h
+	gcc -c src/grid.c -o obj/grid.o \
+-Iinclude $(CFLAGS)
+
+move.o: src/move.c include/move.h
+	gcc -c src/move.c -o obj/move.o \
+-Iinclude $(CFLAGS)
+
+player.o: src/player.c include/player.h
+	gcc -c src/player.c -o obj/player.o \
+-Iinclude $(CFLAGS)
+
+point.o: src/point.c include/point.h
+	gcc -c src/point.c -o obj/point.o \
+-Iinclude $(CFLAGS)
+
+clean:
+	-rm -rf bin
+	-rm -rf lib
+	-rm -rf obj
+	-rm -f grid.tar.gz
+
+archive:
+	tar -czvf grid.tar.gz ./*  --exclude=*.vcxproj*
