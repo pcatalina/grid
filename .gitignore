@@ -6,3 +6,14 @@ docs/
 latex/
 grille.sdf
 grille.v12.suo
+*.pdb
+grid_nc/bin
+*.vcxproj
+*.log
+*.tlog
+*.obj
+*.idb
+grid_sdl/bin
+*.opensdf
+*.sln
+*.lib

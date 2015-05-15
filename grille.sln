@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "grille", "grille.vcxproj", "{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgrid", "libgrid\grille.vcxproj", "{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "grid_nc", "grid_nc\grid_nc.vcxproj", "{17F234A6-8328-4D68-9939-70660E92E430}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9} = {C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "grid_sdl", "grid_sdl\grid_sdl.vcxproj", "{45BC89C0-45EB-430E-97E2-A6F6B4B6F8C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9} = {C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,14 @@ Global
 		{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}.Debug|Win32.Build.0 = Debug|Win32
 		{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}.Release|Win32.ActiveCfg = Release|Win32
 		{C9A6F6FC-46A2-4FD0-89EF-870C86B71BE9}.Release|Win32.Build.0 = Release|Win32
+		{17F234A6-8328-4D68-9939-70660E92E430}.Debug|Win32.ActiveCfg = Debug|Win32
+		{17F234A6-8328-4D68-9939-70660E92E430}.Debug|Win32.Build.0 = Debug|Win32
+		{17F234A6-8328-4D68-9939-70660E92E430}.Release|Win32.ActiveCfg = Release|Win32
+		{17F234A6-8328-4D68-9939-70660E92E430}.Release|Win32.Build.0 = Release|Win32
+		{45BC89C0-45EB-430E-97E2-A6F6B4B6F8C3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{45BC89C0-45EB-430E-97E2-A6F6B4B6F8C3}.Debug|Win32.Build.0 = Debug|Win32
+		{45BC89C0-45EB-430E-97E2-A6F6B4B6F8C3}.Release|Win32.ActiveCfg = Release|Win32
+		{45BC89C0-45EB-430E-97E2-A6F6B4B6F8C3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
