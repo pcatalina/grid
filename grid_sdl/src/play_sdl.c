@@ -164,6 +164,15 @@ void print_grid(grid g)
 	SDL_FreeSurface(sprite);
 	SDL_FreeSurface(backbg);
 	SDL_FreeSurface(wall);
+	SDL_FreeSurface(health);
+	SDL_FreeSurface(poison);
+	SDL_FreeSurface(life);
+	SDL_FreeSurface(heart);
+	SDL_FreeSurface(noHeart);
+	SDL_FreeSurface(tool);
+	SDL_FreeSurface(hunter);
+	SDL_FreeSurface(noTool);
+	SDL_FreeSurface(mask);
 }
 
 /**
