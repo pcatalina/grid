@@ -241,8 +241,9 @@ void play(char* file_name)
 
 			}
 
-			print_grid(g);
+			
 		}
+		print_grid(g);
 
 	}
 	SDL_Quit();
