@@ -1,27 +1,15 @@
-SHELL=/bin/bash 
-
-FOLDERS=libgrid grid_sdl grid_nc
-FOLDERS_TESTS=libgrid grid_sdl grid_nc
-FOLDERS_ALL=${FOLDERS} ${FOLDERS_TESTS}
-
-# call make <target> for each folder (non recursive)
-define make_folders
-	@for a in $1; do    \
-		if [ -d $$a ]; then     \
-			$(MAKE) $2 -C $$a;  \
-		fi;                     \
-	done;
-endef
-
-
 all:
-	$(call make_folders, ${FOLDERS}, all)
+	make -C libgrid
+	make -C grid_sdl
+	make -C grid_nc
 
 clean:
-	$(call make_folders, ${FOLDERS_ALL}, clean)
+	make clean -C libgrid
+	make clean -C grid_sdl
+	make clean -C grid_nc clean
+	-rm -f penguin.tar.gz
 
-docs:
-	$(call make_folders, ${FOLDERS}, docs)
+archive:
+	tar -czvf penguin.tar.gz ./*  --exclude=*.vcxproj*
 
-tests:
-	$(call make_folders, ${FOLDERS_TESTS}, all)
+

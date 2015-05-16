@@ -1,106 +1,23 @@
-###############################################################################
-#								PARAMETERS
-###############################################################################
+CFLAGS+= -Wall -g -std=c99 -Wno-unused-variable
+SRC_FILES=src/grid.c src/move.c src/player.c src/point.c
 
-OUTPUT_NAME=libgrid
-CONFIGNAME=debug
+all: mklib mkobj lib/libgrid.a
 
-# input
-INCLUDE_DIRS = include src
-SOURCE_DIR = src
-DOCS_DIR = docs/html
+mklib:
+	-@mkdir -p lib
 
-# output
-BIN_DIR = lib
-OBJ_DIR = obj
+mkobj:
+	-@mkdir -p obj
 
-# toolchain executables
-CC = gcc
-LD = gcc
-AR = ar
-AS = as
-MKDIR = mkdir -p
-CP = cp
+lib/libgrid.a: obj/grid.o obj/move.o obj/player.o obj/point.o
+	ar -crv $@ $^
 
-# file types to consider
-HEADERS_EXTENSIONS = .h
-SOURCES_EXTENSIONS = .c
-
-###############################################################################
-#									FLAGS
-###############################################################################
-
-# compiler settings
-CFLAGS += -Wall -Wextra -pedantic -Wno-unused-parameter -std=c99
-CFLAGS_DEBUG += -g -O0 --coverage
-CFLAGS_RELEASE += -O3
-
-# linker settings
-LDFLAGS += -lm
-LDFLAGS_DEBUG += --coverage
-LDFLAGS_RELEASE +=
-
-
-ifeq ($(CONFIGNAME), debug)
-	CFLAGS += $(CFLAGS_DEBUG)
-	LDFLAGS += $(LDFLAGS_DEBUG)
-endif
-
-ifeq ($(CONFIGNAME), release)
-	CFLAGS += $(CFLAGS_RELEASE)
-	LDFLAGS += $(LDFLAGS_RELEASE)
-endif
-
-###############################################################################
-#							OBJ path pre-baking
-###############################################################################
-
-#prepare stuff
-BinaryFilePath = $(BIN_DIR)/$(OUTPUT_NAME).a
-SourceFilesWithPaths = $(MORE_SOURCE_FILES) $(foreach d,$(SOURCE_DIR),$(wildcard $(addprefix $(d)/*,$(SOURCES_EXTENSIONS))))
-
-# strip path
-SOURCE_FILES :=  $(notdir $(SourceFilesWithPaths))
-
-# strip extension
-SOURCE_FILES_NAMES :=  $(basename $(SOURCE_FILES))
-
-#generate obj files names
-ObjFiles = $(addsuffix .o, $(SOURCE_FILES_NAMES))
-ObjFiles := $(addprefix $(OBJ_DIR)/, $(ObjFiles))
-IncludeDirs = $(foreach inc, $(INCLUDE_DIRS), $(addprefix -I, $(inc)))
-
-###############################################################################
-#								TARGETS
-###############################################################################
-
-.PHONY: all force
-
-all: ${BinaryFilePath}
-
-# achiving
-${BinaryFilePath}: ${OBJ_DIR} ${ObjFiles} ${BIN_DIR}
-	-${AR} rcsv $@ ${ObjFiles}
-
-# compilation
-${ObjFiles}: ${OBJ_DIR}/%.o: ${SOURCE_DIR}/%.c
-	-${CC} ${CFLAGS} ${IncludeDirs} -MMD -c $< -o $@
-
-# directories
-${BIN_DIR}:
-	${MKDIR} ${BIN_DIR}
-
-${OBJ_DIR}:
-	${MKDIR} ${OBJ_DIR}
+obj/%.o: src/%.c
+	gcc -c $^ -o $@ -Iinclude $(CFLAGS)
 
 clean:
-	-rm -rf ${BIN_DIR}
-	-rm -rf ${OBJ_DIR}
-	-rm -rf ${DOCS_DIR}
+	-@rm -rf lib
+	-@rm -rf obj
 
-docs: force
-	-rm -rf ${DOCS_DIR}
-	doxygen ./docs/Doxyfile
-
--include ${OBJ_DIR}/*.d
-
+depend:
+	makedepend -- $(CFLAGS) -- $(SRC_FILES)
